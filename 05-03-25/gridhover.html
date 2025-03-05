@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        .image-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns for better collage effect */
+            grid-auto-rows: 150px; /* Reduced row height for smaller images */
+            gap: 8px;
+            max-width: 600px; /* Restrict width */
+            margin: auto; /* Center the container */
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            border-radius: 15px; /* Rounded borders */
+        }
+
+        .image-container img:hover {
+            transform: scale(1.1);
+            filter: brightness(0.8);
+        }
+
+        /* Different image sizes for collage effect */
+        .image-container img:nth-child(1) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .image-container img:nth-child(3) {
+            grid-row: span 2;
+        }
+
+        .image-container img:nth-child(5) {
+            grid-column: span 4;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Flex Box</h1>
+    <p style="font-size: 30px;">This is Michael's flexbox</p>
+
+    <div class="image-container">
+        <img src="food2.jpg" alt="Image 1">
+        <img src="food3.jpg" alt="Image 2">
+        <img src="food2.jpg" alt="Image 3">
+        <img src="food3.jpg" alt="Image 4">
+        <img src="food2.jpg" alt="Image 5">
+    </div>
+
+</body>
+</html>

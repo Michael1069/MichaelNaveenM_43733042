@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+.flex-container{
+    display: flex;
+    background-color: rgb(90, 155, 209);
+
+}
+
+.flex-container > div {
+    background-color: rgb(219, 242, 19);
+    margin: 10px;
+    padding: 40px;
+    font-size: 20px;
+}
+
+.image-container {
+    display: flex;
+    gap: 2px;
+}
+
+.image {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    margin: 5px;
+}
+
+.image:hover {
+    transform: scale(1.1);
+    filter: brightness(.8);
+}
+
+</style>
+
+<body>
+
+<h1>Flex Box</h1>
+<p>this is michael's flexbox</p>
+
+<div class="flex-container">
+    <div type="button">hello</div>
+    <div>1</div>
+    <div>1</div>
+</div>
+<br><br><br>
+
+<div class="image-container">
+    <img src="food2.jpg" alt="Image 1" class="image">
+    <img src="food3.jpg" alt="Image 2" class="image">
+    <img src="food2.jpg" alt="Image 3" class="image">
+    <img src="food3.jpg" alt="Image 4" class="image">
+    <img src="food2.jpg" alt="Image 5" class="image">
+</div>
+
+
+</body>
+</html>

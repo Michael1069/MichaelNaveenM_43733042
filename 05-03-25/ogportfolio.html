@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael's Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('your-background-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(34, 34, 34, 0.8);
+            color: white;
+        }
+        .header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-left: 40px;
+        }
+        .header h1, .header p {
+            margin: 0;
+            text-align: left;
+        }
+        hr {
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        .grid {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .three-grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(34, 34, 34, 0.8);
+            color: white;
+        }
+        .footer a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 22px;
+        }
+        ul {
+            list-style-position: inside;
+            padding: 0;
+        }
+        li {
+            font-size: 18px;
+        }
+        h3 {
+            font-size: 24px;
+        }
+        p {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1 style="font-size: 42px;">Michael Naveen M</h1>
+            <p style="font-size: 22px;">BE CSE DS</p>
+            <p style="font-size: 22px;">Sathyabama Institute of Science and Technology</p>
+        </div>
+        <img src="your-image.jpg" alt="Michael's Image">
+    </div>
+    <hr>
+    <div class="container">
+        <div class="grid">
+            <h3>Description</h3>
+            <p>I am a passionate developer and artist who loves blending technology with creativity. Always eager to learn and explore new opportunities.</p>
+        </div>
+        <div class="grid-container">
+            <div class="grid">
+                <h3>10th Marks Info</h3>
+                <ul>
+                    <li>English: 95</li>
+                    <li>Tamil: 90</li>
+                    <li>Maths: 98</li>
+                    <li>Science: 94</li>
+                    <li>Social: 93</li>
+                </ul>
+                <p><strong>Percentage: 92%</strong></p>
+            </div>
+            <div class="grid">
+                <h3>12th Marks Info</h3>
+                <ul>
+                    <li>English: 88</li>
+                    <li>French: 80</li>
+                    <li>Maths: 95</li>
+                    <li>Physics: 85</li>
+                    <li>Chemistry: 82</li>
+                    <li>Computer Science: 90</li>
+                </ul>
+                <p><strong>Percentage: 84%</strong></p>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="three-grid-container">
+        <div class="grid">
+            <h3>Technical Skills</h3>
+            <ul>
+                <li>Python</li>
+                <li>JavaScript</li>
+                <li>React</li>
+                <li>SQL</li>
+                <li>Git & GitHub</li>
+            </ul>
+        </div>
+        <div class="grid">
+            <h3>Hobbies</h3>
+            <ul>
+                <li>Dancing</li>
+                <li>Music Production</li>
+                <li>Gaming</li>
+                <li>Reading Tech Articles</li>
+                <li>Traveling</li>
+            </ul>
+        </div>
+        <div class="grid">
+            <h3>Extra Curricular Activities</h3>
+            <ul>
+                <li>Dance Competitions</li>
+                <li>Hackathons</li>
+                <li>Public Speaking</li>
+                <li>Event Management</li>
+                <li>Volunteer Work</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer">
+        <h3>Contact</h3>
+        <a href="mailto:mikemicky05@gmail.com">📧 Email</a>
+        <a href="https://www.linkedin.com" target="_blank">🔗 LinkedIn</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head><title>Counter</title></head>
+    <style>
+        body{background-color: grey;}
+        .button{
+            margin-top: -100px;
+        }
+
+        
+    </style>
+<body>
+    <center>
+    <h1 style="font-size: 50px;">Counter</h1>
+    <div>
+        <p id="result" style="font-size: 100px; border-radius:100% ; background-color: rgb(252, 214, 158); margin-left:700px; margin-right: 700px;">0</p> 
+    </div>
+    
+    <div class="button">
+    <button class="minusbutton" onclick="sub()" style="font-size: 50px; border-radius: 100%; background-color: rgb(249, 199, 101); margin-right: 50px; padding-left: 20px;">-1</button>
+    <button onclick="add()" style="font-size: 50px; border-radius: 100%; background-color: rgb(249, 199, 101)">+1</button> <br> <br>
+    <button onclick="reset()" style="font-size: 40px; border-radius: 10%;">reset</button>
+    </div>
+           
+    </center>
+</body>
+<script>
+
+let count = 0
+function add(){
+    count = count + 1
+    render()
+}
+
+function sub(){
+    count = count - 1
+    render()
+}
+
+function reset(){
+    count = 0
+    render()
+}
+
+function render(){
+    document.getElementById('result').innerHTML = count
+}
+</script>
+</html>

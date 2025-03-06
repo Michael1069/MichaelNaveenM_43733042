@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <center>  <head><h1 class="heading"><br>Gallery <br> <br></h1></head></center>
+    <style>
+        .heading{
+            color: white; 
+            background-color: black;
+        }
+
+        body{
+            margin: 0px;
+            padding: 0px;
+
+        }
+        .container{
+            background-color: gray;
+            display: flex;
+            flex-wrap:wrap;
+            flex-direction: row;
+            align-items: center;
+            justify-content: start;
+            width: 100%;
+            
+        }
+        .box{
+            height: 200px;
+            width: 200px;
+            margin: 3px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+            
+        }
+
+        .box:hover{
+            transform: scale(1.1);
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+        }
+    </style>
+    <body>
+        <div class="container">
+            <div class="box"><img src="food1.jpg"></div>
+            <div class="box"><img src="food1.jpg"></div>
+            <div class="box"><img src="food1.jpg"></div>
+            <div class="box"><img src="food1.jpg"></div>
+            <div class="box"><img src="food1.jpg"></div>
+            <div class="box"><img src="food1.jpg"></div>
+            <div class="box"><img src="food1.jpg"></div>
+            <div class="box"><img src="food1.jpg"></div>
+            <div class="box"><img src="food1.jpg"></div>
+            <div class="box"><img src="food1.jpg"></div>
+        </div>
+    </body>
+    <footer>
+        <p>&copy; gallery copyrighted</p>
+    </footer>
+</html>

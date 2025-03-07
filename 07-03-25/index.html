@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <title>Food Delivery App</title>
+    </head>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+            font-family: "Montserrat", sans-serif;
+            flex-wrap: wrap;
+        }
+        .navbar{
+   
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            height: 80px;
+            font-size: 20px;
+        
+  
+        }
+        .nav-info{
+            height: 80%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+
+        }
+        .nav-info > a{
+            padding: 10px;
+            text-decoration: none;
+            color:black ;
+            margin-left: 50px;
+        }
+        .nav-signup{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+
+        }
+
+        .nav-signup > img, .btn-signup{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px;
+            transition: background-color 0.3s , transform 0.2s;
+        }
+        .btn-signup:hover{
+            background-color: rgba(0, 0, 0, 0.267);
+            transform: scale(1.1);
+
+        }
+
+        .btn-signup {
+            display: inline-block ;
+            background-color: rgba(240, 248, 255, 0);
+            border: 2px solid black;
+            font-size: 15px;
+            padding: 15px 10px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: black;
+            text-align: center;
+    
+        }
+
+        @media only screen and (max-width: 656px) {
+          .nav-info{
+            display: none !important;
+          }
+          .p1-text{
+            display: none !important;
+          }
+    
+
+        }
+        .nav-brand{
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            align-items: center;
+ 
+        }
+   
+        .container1{
+            width: 80%;
+            height: 400px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-left:10%;
+            margin-top: 3%;
+            border-radius: 30px;
+            
+        }
+        .container1 img {
+            width: 100%;  
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 30px; 
+        }
+        .container2{
+            width: 80%;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            margin-left:10%;
+            margin-top: 3%;
+            border-radius: 30px;
+            margin-top: -400px;
+            color: white;
+        }
+        .container2 > .p1-text{
+            text-align: center;
+            font-size: 15px;
+            font-weight:500px;
+
+            
+        }
+        .container2 > .btn-exploremenu{
+            display: inline-block ;
+            background-color: rgba(127, 155, 180, 0.779);
+            border: 2px solid white;
+            font-size: 15px;
+            padding: 15px 10px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+            transition: background-color 0.3s , transform 0.2s;
+        }
+
+
+        .btn-exploremenu:hover{
+            background-color: #2980b9;
+            transform: scale(1.1);
+        }
+        .container3{
+            margin:10%;
+            margin-top: 5%;
+            margin-bottom: ;
+        }
+
+        .container4 {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 10%;
+            justify-content: space-around;
+            margin-top: -100px;
+            text-align: center;
+            overflow-x: scroll;
+            width:80%;
+            height: 250px;
+            padding: 10px 10px;            
+            gap: 200px;
+        }
+        .scrolling-food:hover{        
+            transform: scale(1.1);
+          
+        }
+
+        .scrolling-food{
+            transition: transform 0.2s;
+            height: 200px;
+            width: 150px;
+            transition: transform 0.2s box-shadow 0.2s;
+        }
+
+
+    </style>
+    <body>
+        <div class="navbar">
+            <div class="nav-brand">Brand</div>
+            <div class="nav-info">
+                <a href="/">Home</a>
+                <a href="/">Menu</a>
+                <a href="/">Contact Us</a>
+            </div>
+            <div class="nav-signup">
+                <a href="/">
+                    <img  class="img-icon" src="./assets/image.png" alt="" height="40px">
+                </a>
+                
+                <a href="/">
+                    <button class="btn-signup" >Sign Up</button>
+                </a>
+            </div>
+        </div>
+        <div class="container1">
+            <img src="./assets/poster2.avif">
+
+        </div>
+            <div class="container2">
+                <h1 style="font-size: 30px; margin-top: 100px ;">Order Your Favourite Food Here!!</h1>
+                <p class="p1-text" style="margin-bottom: 50px;">Enjoy delicious, restaurant-quality meals delivered fresh to your door.
+                    <br><br>
+                    Indulgent textures in every bite.
+                    <br><br>
+                    From crispy appetizers to creamy desserts, taste perfection with every order!</p>
+                <button class="btn-exploremenu" style="margin-bottom: 50px;">Explore Menu</button>
+            </div>
+
+            <div class="container3">
+                <h1 style="font-size: 40px;">Explore Our Menu</h1>
+                <p style="font-size: 15px;">Discover a world of flavors! From sizzling appetizers to mouthwatering main courses and decadent desserts, our menu is crafted to satisfy every craving. Whether you’re in the mood for a hearty meal, a light bite, or something sweet, we have something special for you. Browse by cuisine, dietary preference, or chef’s recommendations and embark on a delicious journey.</p>
+            </div>
+            <div class="container4">
+                    
+                    <div class="scrolling-food">
+                        <img src="./assets/food5.jpg" alt="" height="150px" width="150px" style="border-radius: 50%;"><p style="font-size: 20px;">Food1</p>
+                    </div>
+                    <div class="scrolling-food">
+                        <img src="./assets/food5.jpg" alt="" height="150px" width="150px" style="border-radius: 50%;"><p style="font-size: 20px;">Food2</p>
+                    </div>
+                    <div class="scrolling-food">
+                        <img src="./assets/food5.jpg" alt="" height="150px" width="150px" style="border-radius: 50%;"><p style="font-size: 20px;">Food3</p>
+                    </div>
+                    <div class="scrolling-food">
+                        <img src="./assets/food5.jpg" alt="" height="150px" width="150px" style="border-radius: 50%;"><p style="font-size: 20px;">Food4</p>
+                    </div>
+                    <div class="scrolling-food">
+                        <img src="./assets/food5.jpg" alt="" height="150px" width="150px" style="border-radius: 50%;"><p style="font-size: 20px;">Food5</p>
+                    </div>
+                    
+
+                </div>
+                
+            </div>
+    </body>
+</html>

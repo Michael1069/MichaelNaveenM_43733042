@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Employee</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      background: white;
+      margin: 0 auto 30px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .form-row label {
+      flex: 1;
+      font-weight: bold;
+    }
+
+    .form-row input {
+      flex: 2;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    table {
+      width: 70%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+      margin: 0 auto;
+      margin-top: 100px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #007bff;
+      color: white;
+    }
+    .delete-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background: #a71d2a;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ADD EMPLOYEE</h1>
+
+  <div class="container">
+    <div class="form-row">
+      <label for="name">Name:</label>
+      <input type="text" id="name">
+    </div>
+    <div class="form-row">
+      <label for="age">Age:</label>
+      <input type="number" id="age">
+    </div>
+    <div class="form-row">
+      <label for="position">Position:</label>
+      <input type="text" id="position">
+    </div>
+    <button onclick="addEmployee()">Add Employee</button>
+  </div>
+
+  <table id="employeeTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Position</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Employee rows will appear here -->
+    </tbody>
+  </table>
+
+  <script>
+    function addEmployee() {
+      const name = document.getElementById("name").value;
+      const age = document.getElementById("age").value;
+      const position = document.getElementById("position").value;
+
+      if (name && age && position) {
+        const table = document.getElementById("employeeTable").getElementsByTagName("tbody")[0];
+        const newRow = table.insertRow();
+        
+        //delete button
+        newRow.insertCell(0).innerText = name;
+        newRow.insertCell(1).innerText = age;
+        newRow.insertCell(2).innerText = position;
+
+        const actionCell = newRow.insertCell(3);
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerText = "Delete";
+        deleteBtn.className = "delete-btn";
+        deleteBtn.onclick = function () {
+          table.deleteRow(newRow.rowIndex - 1);
+        };
+        actionCell.appendChild(deleteBtn);
+
+        // clear inputs
+        document.getElementById("name").value = "";
+        document.getElementById("age").value = "";
+        document.getElementById("position").value = "";
+      } else {
+        alert("Please fill out all fields!");
+      }
+    }
+  </script>
+
+</body>
+</html>

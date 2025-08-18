@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS BOX MODEL</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 40px 0;
+    }
+
+    .container {
+      margin-top: 200px;
+      margin-bottom: 100px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .back-box {
+      width: 300px;
+      height: 300px;
+      background-color: rgb(219, 188, 13);
+      position: absolute;
+      z-index: 0;
+      border: 10px solid rgb(77, 11, 11);
+      transition: all 0.3s ease;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .front-box {
+      width: 250px;
+      height: 250px;
+      background-color: blue;
+      position: absolute;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: all 0.3s ease;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+
+    .controls {
+        margin-top: 150px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 80%;
+      background-color: #f0f0f0;
+      border-radius: 12px;
+      margin-bottom: 100px;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-group label {
+      width: 150px;
+      margin: 40px;
+    }
+
+    input[type="range"] {
+      flex: 1;
+    }
+    .container2 {
+      width: 80%;
+      background-color: rgb(221, 228, 235);
+    }
+
+    .desc {
+      background-color: rgb(221, 228, 235);
+      width: 80%;
+      padding: 20px;
+      color: rgb(0, 0, 0);
+      display: flex;
+      gap: 20px;
+    }
+
+    .left-column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      flex: 1;
+    }
+
+    .small-box {
+      width: 80px;
+      height: 80px;
+      margin: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: black;
+    }
+
+    .small-box:nth-child(1) {
+      background-color: rgb(255, 226, 65); /* Yellow */
+    }
+
+    .small-box:nth-child(2) {
+      background-color: rgb(89, 202, 255); /* Blue */
+    }
+
+    .small-box:nth-child(3) {
+      background-color: rgb(255, 153, 0); /* Orange */
+    }
+
+    .small-box:nth-child(4) {
+      border: 2px dashed black;
+    }
+
+    .right-column {
+      flex: 8;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .desc-box {
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 60px;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">CSS BOX MODEL DEMONSTRATION</h1>
+  
+  <div class="container">
+    <div class="back-box" id="backBox"></div>
+    <div class="front-box" id="frontBox"><h2>CONTENT</h2></div>
+  </div>
+
+  <div class="controls">
+    <div class="control-group">
+      <label for="frontSize">Front Box Size:</label>
+      <input type="range" id="frontSize" min="200" max="400" value="250">
+    </div>
+    <div class="control-group">
+      <label for="backSize">Back Box Size:</label>
+      <input type="range" id="backSize" min="250" max="450" value="300">
+    </div>
+    <div class="control-group">
+      <label for="borderSize">Border Thickness:</label>
+      <input type="range" id="borderSize" min="5" max="40" value="10">
+    </div>
+  </div>
+  <div class="container2">
+    <h2 style="text-align: center; margin-top: 50px;">BOX MODEL COMPONENTS</h2>
+    <div class="desc">
+      <div class="left-column">
+        <div class="small-box">Box 1</div>
+        <div class="small-box">Box 2</div>
+        <div class="small-box">Box 3</div>
+        <div class="small-box">Box 4</div>
+      </div>
+      <div class="right-column">
+        <div class="desc-box">Padding - Space between border and content</div>
+        <div class="desc-box">Content - Actual content of the box</div>
+        <div class="desc-box">Border - Surrounds the padding and content</div>
+        <div class="desc-box">Margin - Space outside the border (transparent)</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const frontBox = document.getElementById("frontBox");
+    const backBox = document.getElementById("backBox");
+
+    const frontSize = document.getElementById("frontSize");
+    const backSize = document.getElementById("backSize");
+    const borderSize = document.getElementById("borderSize");
+
+    // Front Box Size Control
+    frontSize.addEventListener("input", () => {
+      let size = frontSize.value;
+      frontBox.style.width = size + "px";
+      frontBox.style.height = size + "px";
+    });
+
+    // Back Box Size Control
+    backSize.addEventListener("input", () => {
+      let size = backSize.value;
+      backBox.style.width = size + "px";
+      backBox.style.height = size + "px";
+    });
+
+    // Border Thickness Control
+    borderSize.addEventListener("input", () => {
+      backBox.style.borderWidth = borderSize.value + "px";
+    });
+  </script>
+</body>
+</html>

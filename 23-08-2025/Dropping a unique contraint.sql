@@ -13,7 +13,8 @@ INSERT INTO employees VALUES (2, 'bob@mail.com', '8888888888');
 
 SHOW INDEX FROM employees;
 
-ALTER TABLE employees DROP INDEX email;
+ALTER TABLE employees 
+DROP INDEX email;
 
 INSERT INTO employees VALUES (3, 'alice@mail.com', '7777777777');
 

@@ -80,3 +80,19 @@ SELECT LTRIM(first_name) AS left_trimmed_name FROM employees;
 
 -- Remove spaces from right side only
 SELECT RTRIM(last_name) AS right_trimmed_name FROM employees;
+
+-- problem 1
+select dept, avg(salary) as avg_salary from employees where salary > 100000 
+group by dept ;
+
+-- problem 2
+select dept, max(salary) as max_salary from employees where salary = 500000
+group by dept;
+
+-- problem 3
+select dept, sum(salary) as total_salary, count(dept) as number_of_emp from employees where salary > 100000 
+group by dept having count(dept) > 1;
+
+-- problem 4
+select dept, avg(salary) as avg_salary from employees where salary between 50000 and 200000
+group by dept;

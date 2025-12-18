@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Raise Complaint - HostelSphere+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .complaint-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: none;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2.5rem 2rem;
+            border: none;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: white;
+        }
+
+        .card-header p {
+            margin: 0.5rem 0 0;
+            opacity: 0.9;
+            font-size: 0.95rem;
+            color: white;
+        }
+
+        .card-body {
+            padding: 2.5rem 2rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-label .required {
+            color: #ef4444;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23667eea' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+        }
+
+        .priority-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .priority-option {
+            display: none;
+        }
+
+        .priority-label {
+            display: block;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .priority-label:hover {
+            border-color: #667eea;
+            background: #f9fafb;
+            transform: translateY(-2px);
+        }
+
+        .priority-option:checked + .priority-label {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .priority-low {
+            border-color: #10b981;
+        }
+
+        .priority-option:checked + .priority-low {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .priority-medium {
+            border-color: #f59e0b;
+        }
+
+        .priority-option:checked + .priority-medium {
+            background: #f59e0b;
+            border-color: #f59e0b;
+        }
+
+        .priority-high {
+            border-color: #ef4444;
+        }
+
+        .priority-option:checked + .priority-high {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .category-option {
+            display: none;
+        }
+
+        .category-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.25rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .category-label:hover {
+            border-color: #667eea;
+            background: #f9fafb;
+            transform: translateY(-2px);
+        }
+
+        .category-option:checked + .category-label {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .category-icon {
+            font-size: 2rem;
+        }
+
+        .category-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 2.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            font-size: 1.5rem;
+        }
+
+        .help-text {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 2rem 1.5rem;
+            }
+
+            .priority-options {
+                grid-template-columns: 1fr;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR FRAGMENT -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <!-- CONTENT -->
+    <div class="form-container">
+        <div class="card complaint-card">
+            <div class="card-header text-center">
+                <h2>📝 Raise a Complaint</h2>
+                <p>Help us improve your hostel experience by reporting issues</p>
+            </div>
+
+            <div class="card-body">
+                <!-- Success Message -->
+                <div class="success-message" th:if="${param.success}">
+                    <span class="success-icon">✓</span>
+                    <div>
+                        <strong>Complaint Submitted Successfully!</strong>
+                        <p style="margin: 0.25rem 0 0; font-size: 0.9rem; opacity: 0.95;">We've received your complaint and will address it soon.</p>
+                    </div>
+                </div>
+
+                <form th:action="@{/complaint/save}" method="post">
+
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            📋 Basic Information
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">
+                                Title <span class="required">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="title"
+                                   class="form-control" 
+                                   placeholder="Brief description of the issue"
+                                   required>
+                            <div class="help-text">Provide a clear, concise title for your complaint</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">
+                                Description <span class="required">*</span>
+                            </label>
+                            <textarea name="description"
+                                      class="form-control"
+                                      rows="4" 
+                                      placeholder="Describe the issue in detail..."
+                                      required></textarea>
+                            <div class="help-text">Include as many details as possible to help us understand the issue</div>
+                        </div>
+                    </div>
+
+                    <!-- Category Selection -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            🏷️ Category
+                        </div>
+
+                        <div class="category-grid">
+                            <div>
+                                <input type="radio" name="category" value="Water" id="cat-water" class="category-option" required>
+                                <label for="cat-water" class="category-label">
+                                    <span class="category-icon">💧</span>
+                                    <span class="category-name">Water</span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" name="category" value="Electricity" id="cat-electricity" class="category-option">
+                                <label for="cat-electricity" class="category-label">
+                                    <span class="category-icon">⚡</span>
+                                    <span class="category-name">Electricity</span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" name="category" value="Cleanliness" id="cat-cleanliness" class="category-option">
+                                <label for="cat-cleanliness" class="category-label">
+                                    <span class="category-icon">🧹</span>
+                                    <span class="category-name">Cleanliness</span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" name="category" value="Security" id="cat-security" class="category-option">
+                                <label for="cat-security" class="category-label">
+                                    <span class="category-icon">🔒</span>
+                                    <span class="category-name">Security</span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" name="category" value="Roommate" id="cat-roommate" class="category-option">
+                                <label for="cat-roommate" class="category-label">
+                                    <span class="category-icon">👥</span>
+                                    <span class="category-name">Roommate</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Priority Level -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            🎯 Priority Level
+                        </div>
+
+                        <div class="priority-options">
+                            <div>
+                                <input type="radio" name="priority" value="LOW" id="priority-low" class="priority-option" required>
+                                <label for="priority-low" class="priority-label priority-low">
+                                    <div>🟢 Low</div>
+                                    <small style="font-size: 0.75rem; opacity: 0.8;">Can wait</small>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" name="priority" value="MEDIUM" id="priority-medium" class="priority-option">
+                                <label for="priority-medium" class="priority-label priority-medium">
+                                    <div>🟡 Medium</div>
+                                    <small style="font-size: 0.75rem; opacity: 0.8;">Important</small>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" name="priority" value="HIGH" id="priority-high" class="priority-option">
+                                <label for="priority-high" class="priority-label priority-high">
+                                    <div>🔴 High</div>
+                                    <small style="font-size: 0.75rem; opacity: 0.8;">Urgent</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Selection -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            🏠 Room Location
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">
+                                Select Your Room <span class="required">*</span>
+                            </label>
+                            <select name="roomId"
+                                    class="form-select" 
+                                    required>
+                                <option value="">-- Select Your Room --</option>
+                                <option th:each="room : ${rooms}"
+                                        th:value="${room.id}"
+                                        th:text="${room.block + ' - Room ' + room.roomNumber}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit">
+                        Submit Complaint
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

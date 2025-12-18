@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin - Complaint Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .dashboard-container {
+            padding: 2rem 0;
+        }
+
+        /* Admin Navigation Tabs */
+        .admin-tabs {
+            background: white;
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-tab-link {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+        }
+
+        .admin-tab-link:hover {
+            background: #f3f4f6;
+            color: #374151;
+            transform: translateY(-2px);
+        }
+
+        .admin-tab-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .page-header h3 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+        .page-header p {
+            margin: 0.5rem 0 0;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-card h5 {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .stat-card.pending { border-left: 4px solid #f59e0b; }
+        .stat-card.in-progress { border-left: 4px solid #3b82f6; }
+        .stat-card.resolved { border-left: 4px solid #10b981; }
+        .stat-card.total { border-left: 4px solid #667eea; }
+
+        .table-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-header h4 {
+            margin: 0;
+            color: #1f2937;
+            font-weight: 700;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 300px;
+        }
+
+        .search-box input {
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .custom-table {
+            width: 100%;
+            margin: 0;
+        }
+
+        .custom-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .custom-table thead th {
+            color: white;
+            font-weight: 600;
+            padding: 1rem;
+            border: none;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .custom-table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-bottom: 1px solid #f3f4f6;
+            color: #374151;
+        }
+
+        .custom-table tbody tr {
+            transition: all 0.2s ease;
+        }
+
+        .custom-table tbody tr:hover {
+            background: #f9fafb;
+            transform: scale(1.01);
+        }
+
+        .status-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-in-progress {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-resolved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .priority-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .priority-high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .priority-medium {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .priority-low {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .action-btn {
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            font-size: 0.813rem;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+            margin: 0.2rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-progress {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-progress:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            color: white;
+        }
+
+        .btn-resolve {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-resolve:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            color: white;
+        }
+
+        .btn-reopen {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-reopen:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+            color: white;
+        }
+
+        .room-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .room-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #9ca3af;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .table-container {
+                padding: 1rem;
+                overflow-x: auto;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .action-btn {
+                display: block;
+                width: 100%;
+                margin: 0.2rem 0;
+            }
+
+            .admin-tabs {
+                flex-direction: column;
+            }
+
+            .admin-tab-link {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR FRAGMENT -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <!-- CONTENT -->
+    <div class="container dashboard-container">
+        
+        <!-- Admin Navigation Tabs -->
+        <div class="admin-tabs">
+            <a href="/admin/complaints" class="admin-tab-link active">
+                <span>📋</span> Complaints
+            </a>
+            <a href="/admin/meals" class="admin-tab-link">
+                <span>🍽️</span> Meal Schedule
+            </a>
+            <a href="/admin/attendance" class="admin-tab-link">
+                <span>✅</span> Attendance
+            </a>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h3>
+                <span style="font-size: 2rem;">📋</span> Complaint Management
+            </h3>
+            <p>Manage and resolve all hostel complaints</p>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="stats-container">
+            <div class="stat-card total">
+                <h5>Total Complaints</h5>
+                <div class="stat-value" th:text="${complaints.size()}">0</div>
+            </div>
+            <div class="stat-card pending">
+                <h5>Pending</h5>
+                <div class="stat-value" th:text="${complaints.?[status == 'PENDING'].size()}">0</div>
+            </div>
+            <div class="stat-card in-progress">
+                <h5>In Progress</h5>
+                <div class="stat-value" th:text="${complaints.?[status == 'IN_PROGRESS'].size()}">0</div>
+            </div>
+            <div class="stat-card resolved">
+                <h5>Resolved</h5>
+                <div class="stat-value" th:text="${complaints.?[status == 'RESOLVED'].size()}">0</div>
+            </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container">
+            <div class="table-header">
+                <h4>All Complaints</h4>
+                <div class="search-box">
+                    <svg class="search-icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search complaints...">
+                </div>
+            </div>
+
+            <div th:if="${complaints.isEmpty()}" class="empty-state">
+                <svg fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+                </svg>
+                <h5>No complaints found</h5>
+                <p>There are currently no complaints to display.</p>
+            </div>
+
+            <div th:unless="${complaints.isEmpty()}" class="table-responsive">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Priority</th>
+                            <th>Room</th>
+                            <th>Raised By</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tableBody">
+                        <tr th:each="c : ${complaints}">
+                            <td>
+                                <strong th:text="'#' + ${c.id}">#1</strong>
+                            </td>
+                            <td>
+                                <strong th:text="${c.title}">Complaint Title</strong>
+                            </td>
+                            <td th:text="${c.category}">Category</td>
+                            <td>
+                                <span class="priority-badge priority-high" 
+                                      th:if="${c.priority == 'HIGH'}"
+                                      th:text="${c.priority}">HIGH</span>
+                                <span class="priority-badge priority-medium" 
+                                      th:if="${c.priority == 'MEDIUM'}"
+                                      th:text="${c.priority}">MEDIUM</span>
+                                <span class="priority-badge priority-low" 
+                                      th:if="${c.priority == 'LOW'}"
+                                      th:text="${c.priority}">LOW</span>
+                            </td>
+                            <td>
+                                <div class="room-info">
+                                    <div class="room-icon" th:text="${c.room.block}">A</div>
+                                    <span th:text="${c.room.block + '-' + c.room.roomNumber}">A-101</span>
+                                </div>
+                            </td>
+                            <td th:text="${c.raisedBy.email}">user@example.com</td>
+                            <td>
+                                <span class="status-badge status-pending"
+                                      th:if="${c.status == 'PENDING'}">PENDING</span>
+                                <span class="status-badge status-in-progress"
+                                      th:if="${c.status == 'IN_PROGRESS'}">IN PROGRESS</span>
+                                <span class="status-badge status-resolved"
+                                      th:if="${c.status == 'RESOLVED'}">RESOLVED</span>
+                            </td>
+                            <td>
+                                <a th:href="@{'/admin/complaint/' + ${c.id} + '/status/IN_PROGRESS'}"
+                                   class="action-btn btn-progress"
+                                   th:if="${c.status == 'PENDING'}">
+                                    <svg width="14" height="14" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                    </svg>
+                                    In Progress
+                                </a>
+                                <a th:href="@{'/admin/complaint/' + ${c.id} + '/status/RESOLVED'}"
+                                   class="action-btn btn-resolve"
+                                   th:if="${c.status != 'RESOLVED'}">
+                                    <svg width="14" height="14" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                    </svg>
+                                    Resolve
+                                </a>
+                                <a th:href="@{'/admin/complaint/' + ${c.id} + '/status/PENDING'}"
+                                   class="action-btn btn-reopen"
+                                   th:if="${c.status == 'RESOLVED'}">
+                                    <svg width="14" height="14" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                                        <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                                    </svg>
+                                    Reopen
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        document.getElementById('searchInput')?.addEventListener('keyup', function() {
+            const searchValue = this.value.toLowerCase();
+            const tableRows = document.querySelectorAll('#tableBody tr');
+            
+            tableRows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchValue) ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
